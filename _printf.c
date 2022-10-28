@@ -42,6 +42,7 @@ int _printf(const char *format, ...)
 			switch (format[i+1])
 			{
 				case 'd' :
+				case 'i' :	
 					{
 						found = 1;
 
@@ -72,6 +73,7 @@ int _printf(const char *format, ...)
 					break;
 
 				case 's' :
+				case 'c' :
 					{
 						found = 1;
 
