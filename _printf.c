@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
+#include "main.c" 
 
 /**
  * _printf - printf function
@@ -14,34 +15,39 @@
 
 int _printf(const char *format, ...)
 {
+	if (format == NULL)
+		return 0;
+
 
 	va_list valist;
+
 	int num = 0;
 	char *token = NULL;
 	int i = 0;
 	int len = strlen(format);
 	int nprinted = 0;
 	int found = 0;
-	int str[40];
 	int temp = num;
-	 int j = 0;
-
+	int j = 0;
+	int str[40];
+	
 	va_start(valist, format);
 
-	if (format == NULL)
-		return 0;
 
 	while (format[i] != ' ')
 	{
 		num = 0;
 		found = 0;
 		token = NULL;
+		num = 0;
 
 		if ((format[i] == '%') && ((i + 1) < len))
 		{
 			switch (format[i+1])
+
 			{
 				case 'd' :
+				case 'i' :	
 					{
 						found = 1;
 
@@ -68,8 +74,10 @@ int _printf(const char *format, ...)
 							else
 								putchar(str[j--]);
 						}
+					
 					}
 					break;
+
 
 				case 's' :
 					{
