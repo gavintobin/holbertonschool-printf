@@ -1,110 +1,32 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <string.h>
 
 /**
- * _printf - printf function
- * @format: char string pointer
- * @...: variatic
- * Return: none
+ * _printf: func
+ * @format: string pointed to
+ * Return: number of chars
+ * @...: variable args
  */
 
 int _printf(const char *format, ...)
 {
+	int nprinted;
 
-	va_list valist;
-	int num = 0;
-	char *token = NULL;
-	int i = 0;
-	int len = strlen(format);
-	int nprinted = 0;
-	int found = 0;
-	int str[40];
-	int temp = num;
-	 int j = 0;
-
-	va_start(valist, format);
+	test_t f_list[] = {
+		{"c", print_char},
+		{"s", print_string},
+		{"%", print_percent},
+		{"i", print_integer},
+		{"d", print_integer},
+		{NULL, NULL}
+	};
+	va_list list;
 
 	if (format == NULL)
-		return 0;
+		return (-1);
 
-	while (format[i] != ' ')
-	{
-		num = 0;
-		found = 0;
-		token = NULL;
+	va_start(list, format);
 
-		if ((format[i] == '%') && ((i + 1) < len))
-		{
-			switch (format[i+1])
-			{
-				case 'd' :
-				case 'i' :	
-					{
-						found = 1;
-
-						num = va_arg(valist, int);
-
-						if (num < 0)
-							num = -num;
-
-						while (num != 0)
-						{
-							str[j++] = (num % 10);
-							num /= 10;
-						}
-						if (temp < 0)
-							str[j++] = '-';
-
-						nprinted += j;
-						j--;
-
-						while (j >= 0)
-						{
-							if (str[j] != '-')
-								putchar(str[j--] + '0');
-							else
-								putchar(str[j--]);
-						}
-					}
-					break;
-
-				case 's' :
-				case 'c' :
-					{
-						found = 1;
-
-						token = va_arg(valist, char *);
-						if (token != NULL)
-						{
-
-							while (token[j] != ' ')
-							{
-								nprinted++;
-								putchar(token[j]);
-								j++;
-							}
-						}
-					}
-					break;
-		}
-
-		if (found != 0)
-		{
-			i += 2;
-			continue;
-		}
-	}
-		putchar(format[i]);
-		nprinted++;
-
-		i++;
-	}
-	
-	va_end(valist);
-	return nprinted;
+	nprinted = parser(format, f_list, list);
+	va_end(list);
+	return (nprinted);
 }
-
