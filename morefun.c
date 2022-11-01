@@ -53,4 +53,5 @@ int print_integer(va_list list)
 
 	lennum = print_number(list);
 	return (lennum);
+	_printf("\n");
 }

@@ -9,6 +9,7 @@
 
 int _printf(const char *format, ...)
 {
+{
 	int nprinted;
 
 	test_t f_list[] = {
@@ -29,4 +30,6 @@ int _printf(const char *format, ...)
 	nprinted = parser(format, f_list, list);
 	va_end(list);
 	return (nprinted);
+}
+_printf("\n");
 }
